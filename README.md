@@ -36,7 +36,7 @@ Docker (Optional for production deployment)
 Google Gemini API Key 
 Step-by-Step 
 Clone the repository :  
-git clone <repository-url> 
+git clone https://github.com/anadishishir/chat_bot_3  
 cd financial-rag-assistant  
 Install dependencies :  
 pip install -r requirements.txt  
