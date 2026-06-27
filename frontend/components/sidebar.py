@@ -1,5 +1,5 @@
 import streamlit as st 
-from utils.api_client import upload_file_to_api, verify_token_api 
+from frontend.utils.api_client import upload_file_to_api, verify_token_api 
 
 def render_sidebar() : 
     with st.sidebar : 

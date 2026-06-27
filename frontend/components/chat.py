@@ -1,5 +1,5 @@
 import streamlit as st 
-from utils.api_client import ask_api 
+from frontend.utils.api_client import ask_api 
 
 def render_chat_interface(token) : 
     if "messages" not in st.session_state : 
