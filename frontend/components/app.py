@@ -1,6 +1,6 @@
 import streamlit as st 
-from frontend.components.sidebar import render_sidebar 
-from frontend.components.chat import render_chat_interface 
+from components.sidebar import render_sidebar 
+from components.chat import render_chat_interface 
 
 st.set_page_config(page_title="Financial AI", layout="wide") 
 
