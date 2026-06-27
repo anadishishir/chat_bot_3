@@ -1,7 +1,7 @@
 import requests 
 import streamlit as st 
 
-BASE_URL = "http://localhost:8000" 
+BASE_URL = "https://financial-bot-api.onrender.com" 
 
 def upload_file_to_api(file_obj, token) : 
     headers = {"Authorization": f"Bearer {token}"} 
