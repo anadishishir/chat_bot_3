@@ -1,11 +1,8 @@
-import chromadb 
-from src.config import COLLECTION_NAME, logger 
+import os 
+from supabase import create_client 
+from src.config import logger 
 
-client = chromadb.PersistentClient(path="./chroma_db") 
+supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_SERVICE_KEY")) 
 
 def get_collection() : 
-    try : 
-        return client.get_or_create_collection(name=COLLECTION_NAME) 
-    except Exception as e : 
-        logger.error(f"Error occurred while fetching collection: {e}") 
-        raise 
+    return supabase 

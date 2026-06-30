@@ -4,6 +4,8 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext 
 from fastapi.security import OAuth2PasswordBearer 
 from src.config import SECRET_KEY 
+from sqlalchemy.orm import Session 
+from src.models import User 
 
 SECRET_KEY = SECRET_KEY 
 ALGORITHM = "HS256" 
@@ -31,3 +33,14 @@ def get_user_id_from_token(token : str) :
         return user_id 
     except JWTError : 
         raise Exception("Could not validate credentials !!!")     
+    
+def get_user_by_username(db: Session, username: str) : 
+    return db.query(User).filter(User.username == username).first() 
+
+def authenticate_user(db: Session, username: str, password: str) : 
+    user = get_user_by_username(db, username) 
+    if not user : 
+        return False 
+    if not verify_password(password, user.hashed_password) : 
+        return False 
+    return user     

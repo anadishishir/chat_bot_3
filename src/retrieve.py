@@ -1,22 +1,27 @@
 from src.vector_store import get_collection 
+from src.ingest import generate_embedding 
 from src.config import logger 
 
-def retrieve_for_user(query : str, user_id : str, n : int = 3) : 
+def retrieve_for_user(query: str, user_id: str, n: int = 3) : 
     try : 
-        collection = get_collection() 
-        results = collection.query(
-            query_texts = [query],  
-            n_results = n, 
-            where = {"user_id" : user_id} 
-        ) 
+        supabase = get_collection() 
+        query_embedding = generate_embedding(query) 
+        response = supabase.rpc("match_documents", { 
+            "query_embedding": query_embedding, 
+            "match_threshold": 0.5, 
+            "match_count": n, 
+            "filter": {"user_id": user_id} 
+        }).execute() 
 
-        docs = results.get("documents",[[]])[0] 
-
+        docs = [item['content'] for item in response.data] 
+        
         if not docs : 
-            logger.info(f"No relevant documents found for user {user_id} with query : {query}") 
+            logger.info(f"No relevant documents found for user {user_id}") 
         else : 
-            logger.info(f"Successfully retrived {len(docs)} chumks for user {user_id}") 
+            logger.info(f"Successfully retrieved {len(docs)} chunks for user {user_id}") 
+            
+        return docs 
 
     except Exception as e : 
-        logger.error(f"Error during retrieval for user {user_id} : {e}") 
-        return [] 
+        logger.error(f"Error during retrieval for user {user_id}: {e}") 
+        return []             
