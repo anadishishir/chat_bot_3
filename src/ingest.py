@@ -2,7 +2,7 @@ import uuid
 from pypdf import PdfReader 
 from src.vector_store import get_collection 
 from src.config import GEMINI_API_KEY, logger 
-from google.generativeai import genai 
+import google.generativeai as genai  
 
 client = genai.Client(api_key=GEMINI_API_KEY) 
 
