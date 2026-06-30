@@ -11,3 +11,5 @@ chromadb
 streamlit 
 requests 
 sqlalchemy 
+pyscopg2-binary 
+supabase 
