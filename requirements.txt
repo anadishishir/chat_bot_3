@@ -1,13 +1,12 @@
 fastapi 
+uvicorn 
 pydantic 
 bcrypt 
 python-jose
 passlib[bcrypt]  
 python-dotenv 
-sentence_transformers 
 pypdf 
 google-generativeai 
-chromadb 
 streamlit 
 requests 
 sqlalchemy 

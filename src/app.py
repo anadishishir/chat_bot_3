@@ -59,18 +59,22 @@ async def upload(file : UploadFile = File(...), user_id : str = Depends(get_curr
         raise HTTPException(status_code=500, detail=str(e))     
 
 @app.post("/ask") 
-async def ask(request : QueryRequest, user_id : str = Depends(get_current_user),db : Session = Depends(get_db)) : 
-    docs = retrieve_for_user(request.question, str(user_id)) 
-    context = "\n".join(docs) if docs else "" 
+async def ask(payload: dict, db: Session = Depends(get_db), user=Depends(get_current_user)) : 
+    user_id = user.id 
+    user_question = payload.get("question") 
 
-    user_history = HistoryManager.get_history(db, user_id) 
+    HistoryManager.add_to_history(db, user_id, "user", user_question) 
 
-    answer = generate_answer(request.question, context=context, history=str(user_history)) 
+    history_objs = HistoryManager.get_history(db, user_id) 
+    history = [{"role": msg.role, "content": msg.content} for msg in history_objs] 
 
-    HistoryManager.add_to_history(db, user_id, "user", request.question) 
+    context = retrieve_for_user(user_question, user_id) 
+
+    answer = generate_answer(user_question, context, history) 
+
     HistoryManager.add_to_history(db, user_id, "assistant", answer) 
-
-    return {"answer": answer, "citations": docs} 
+    
+    return {"answer": answer} 
 
 @app.get("/verify-token") 
 async def verify_token(user_id : str = Depends(get_current_user)) : 

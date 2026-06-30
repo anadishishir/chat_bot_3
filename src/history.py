@@ -16,3 +16,4 @@ class HistoryManager :
         except Exception as e : 
             logger.error(f"Failed to save history: {e}") 
             db.rollback() 
+
