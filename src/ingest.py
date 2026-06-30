@@ -12,8 +12,7 @@ def generate_embedding(text: str) :
         model="models/text-embedding-004", 
         contents=text 
     ) 
-    return result['embedding']  
-    return result.embeddings[0].values 
+    return result['embedding']    
 
 def extract_text_from_pdf(pdf_path) : 
     try : 
