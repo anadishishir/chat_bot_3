@@ -4,13 +4,15 @@ from src.vector_store import get_collection
 from src.config import GEMINI_API_KEY, logger 
 import google.generativeai as genai  
 
-client = genai.Client(api_key=GEMINI_API_KEY) 
+genai.configure(api_key=GEMINI_API_KEY) 
+model = genai.GenerativeModel('gemini-2.5-flash') 
 
 def generate_embedding(text: str) : 
-    result = client.models.embed_content( 
-        model="text-embedding-004",  
-        contents= text 
+    result = genai.embed_content( 
+        model="models/text-embedding-004", 
+        contents=text 
     ) 
+    return result['embedding']  
     return result.embeddings[0].values 
 
 def extract_text_from_pdf(pdf_path) : 
