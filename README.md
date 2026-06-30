@@ -1,4 +1,7 @@
 🚀 Financial RAG Assistant 
+
+**[👉 Click here to access the Live Demo](https://your-app-name.onrender.com)** 
+
 A robust, enterprise-grade Retrieval-Augmented Generation (RAG) system designed for secure, history-aware financial document analysis. This project emphasizes data isolation, persistent session memory, and a scalable cloud-native architecture. 
 
 📂 Project Structure 
