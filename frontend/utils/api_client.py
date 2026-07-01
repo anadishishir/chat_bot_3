@@ -25,3 +25,15 @@ def verify_token_api(token) :
         return response.status_code == 200 
     except : 
         return False 
+
+def perform_login(username, password) : 
+    data = {"username": username, "password": password} 
+    try : 
+        response = requests.post(f"{BASE_URL}/token", data=data) 
+        if response.status_code == 200 : 
+            return response.json().get("access_token") 
+        else : 
+            return None 
+    except Exception as e : 
+        print(f"Login error: {e}") 
+        return None     
